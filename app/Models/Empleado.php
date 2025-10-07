@@ -10,10 +10,8 @@ class Empleado extends Model
     protected $fillable = [
         'nombre',
         'apellido',
-        'dni',
         'telefono',
         'email',
-        'especialidad',
     ];
 
     public function turnos(): HasMany

@@ -20,7 +20,6 @@ class Turno extends Model
 
     protected $casts = [
         'fecha' => 'date',
-        'hora' => 'time',
     ];
 
     public function cliente(): BelongsTo

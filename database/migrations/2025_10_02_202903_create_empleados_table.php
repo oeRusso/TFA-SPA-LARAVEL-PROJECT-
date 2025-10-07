@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('apellido', 100);
             $table->string('telefono', 20)->nullable();
             $table->string('email', 150)->unique();
-            $table->enum('rol', ['admin', 'recepcionista', 'esteticista']);
             $table->timestamps();
         });
     }

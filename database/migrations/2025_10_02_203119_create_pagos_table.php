@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('turno_id')->nullable()->constrained('turnos')->onDelete('cascade');
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
-            $table->timestamp('fecha_pago')->useCurrent();
+            $table->foreignId('turno_id')->nullable()->constrained('turnos')->onDelete('cascade');
             $table->decimal('monto', 10, 2);
-            $table->enum('metodo', ['efectivo', 'tarjeta', 'mercadopago']);
+            $table->string('metodo_pago', 50);
+            $table->timestamp('fecha_pago')->useCurrent();
+            $table->string('estado', 50)->default('pendiente');
             $table->timestamps();
         });
     }

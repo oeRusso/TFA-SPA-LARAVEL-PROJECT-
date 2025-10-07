@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notificaciones', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
-            $table->text('mensaje');
-            $table->string('tipo', 50);
-            $table->timestamp('fecha_envio')->useCurrent();
-            $table->string('estado', 50)->default('pendiente');
+            $table->string('nombre')->unique();
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('notificaciones');
+        Schema::dropIfExists('roles');
     }
 };
