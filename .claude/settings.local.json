@@ -5,7 +5,21 @@
       "Bash(php artisan make:model:*)",
       "Bash(php artisan make:migration:*)",
       "Bash(php artisan make:seeder:*)",
-      "Bash(php artisan migrate:fresh:*)"
+      "Bash(php artisan migrate:fresh:*)",
+      "Bash(composer show:*)",
+      "Bash(composer:*)",
+      "Bash(php artisan make:livewire:*)",
+      "Bash(php artisan:*)",
+      "Bash(findstr:*)",
+      "Bash(php:*)",
+      "Bash(netstat:*)",
+      "Bash(netsh:*)",
+      "Read(//c/xampp/php/**)",
+      "Bash(Get-MpPreference)",
+      "Bash(Select-Object -ExpandProperty ExclusionPath)",
+      "Bash(powershell:*)",
+      "Bash(dir:*)",
+      "Bash(if exist \"app\\Livewire\\ClientesIndex.php\" del \"app\\Livewire\\ClientesIndex.php\")"
     ],
     "deny": [],
     "ask": []
