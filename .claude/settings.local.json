@@ -19,7 +19,9 @@
       "Bash(Select-Object -ExpandProperty ExclusionPath)",
       "Bash(powershell:*)",
       "Bash(dir:*)",
-      "Bash(if exist \"app\\Livewire\\ClientesIndex.php\" del \"app\\Livewire\\ClientesIndex.php\")"
+      "Bash(if exist \"app\\Livewire\\ClientesIndex.php\" del \"app\\Livewire\\ClientesIndex.php\")",
+      "Bash(if not exist \"resources\\views\\auth\" mkdir \"resources\\views\\auth\")",
+      "Bash(if exist \"app\\Models\\Role.php\" del \"app\\Models\\Role.php\")"
     ],
     "deny": [],
     "ask": []

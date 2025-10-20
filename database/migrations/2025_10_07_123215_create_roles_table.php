@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre')->unique();
-            $table->string('descripcion')->nullable();
-            $table->timestamps();
-        });
+        // La tabla de roles ahora la maneja Spatie Permission
+        // Esta migración se mantiene para compatibilidad pero no crea nada
+        // ya que Spatie crea su propia tabla 'roles'
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Models\Cliente;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
+
 
 class ClientesIndex extends Component
 {
