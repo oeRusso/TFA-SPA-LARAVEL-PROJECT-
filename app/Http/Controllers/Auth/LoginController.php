@@ -22,6 +22,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        // Validar credenciales
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -31,23 +32,39 @@ class LoginController extends Controller
             'password.required' => 'La contraseña es obligatoria',
         ]);
 
+        // Intentar autenticar al usuario
         if (Auth::attempt($credentials, $request->filled('remember'))) {
+            // Regenerar la sesión para prevenir ataques de fijación de sesión
             $request->session()->regenerate();
 
-            // Redirigir según el rol del usuario
+            // Obtener el usuario autenticado
             $user = Auth::user();
 
-            if ($user->hasRole('Admin')) {
-                return redirect()->intended('/dashboard');
-            } elseif ($user->hasRole('Recepcionista')) {
-                return redirect()->intended('/dashboard');
-            } elseif ($user->hasRole('Esteticista')) {
-                return redirect()->intended('/turnos');
-            } else {
-                return redirect()->intended('/mis-turnos');
+            // Redirigir según el rol del usuario
+            try {
+                if ($user->hasRole('Admin')) {
+                    return redirect()->intended('/dashboard')->with('success', "Bienvenido/a {$user->name}");
+                } elseif ($user->hasRole('Recepcionista')) {
+                    return redirect()->intended('/dashboard')->with('success', "Bienvenido/a {$user->name}");
+                } elseif ($user->hasRole('Esteticista')) {
+                    return redirect()->intended('/turnos')->with('success', "Bienvenido/a {$user->name}");
+                } else {
+                    // Cliente u otro rol
+                    return redirect()->intended('/mis-turnos')->with('success', "Bienvenido/a {$user->name}");
+                }
+            } catch (\Exception $e) {
+                // Si hay error al verificar rol, logout y mostrar error
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => 'Hubo un problema al verificar tus permisos. Por favor, contacta al administrador.',
+                ]);
             }
         }
 
+        // Credenciales incorrectas
         throw ValidationException::withMessages([
             'email' => 'Las credenciales proporcionadas no coinciden con nuestros registros.',
         ]);
@@ -58,11 +75,16 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        // Cerrar la sesión del usuario
         Auth::logout();
 
+        // Invalidar la sesión actual
         $request->session()->invalidate();
+
+        // Regenerar el token CSRF para seguridad
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        // Redirigir al login con mensaje de éxito
+        return redirect()->route('login')->with('success', 'Has cerrado sesión correctamente.');
     }
 }
